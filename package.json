@@ -1,0 +1,38 @@
+{
+  "name": "new-node-problem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha test/test.spec.js --timeout 10000 --exit",
+    "sample-test": "mocha test/sample_test.spec.js --timeout 10000 --exit",
+    "start": "node index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "concurrently": "^7.6.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "jwt-decode": "^3.1.2",
+    "mongoose": "^7.0.3",
+    "mysql": "^2.18.1",
+    "only": "^0.0.2",
+    "sqlite3": "^5.0.11"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.1.0",
+    "mocha-junit-reporter": "^1.23.3",
+    "mochawesome": "^7.0.2",
+    "mochawesome-report-generator": "^5.1.1",
+    "random": "^2.2.0",
+    "randomstring": "^1.2.2"
+  }
+}
