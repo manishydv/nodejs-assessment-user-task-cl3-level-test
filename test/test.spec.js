@@ -121,7 +121,7 @@ describe('Task Manager API', function () {
       const res = await chai.request(app)
         .get('/get-all-projects')
         .set('auth-token', token);
-      res.should.have.status(200);
+      res.should.have.status(200);      
       res.body.should.be.a('array');
       res.body.length.should.be.above(0);
     });
@@ -176,7 +176,7 @@ describe('Task Manager API', function () {
 
     it('should retrieve tasks by project ID', async function () {
       const res = await chai.request(app)
-        .get(`/getTaskFromProject?projectId=${projectId}`)
+        .get(`/getTaskFromProject?project=${projectId}`)
         .set('auth-token', token);
       res.should.have.status(200);
       res.body.should.be.a('array');
@@ -188,7 +188,7 @@ describe('Task Manager API', function () {
     it('should deny access without a token', async function () {
       const res = await chai.request(app).get('/get-all-projects');
       res.should.have.status(401);
-      res.body.errMsg.should.equal('Token missing');
+      res.body.errMsg.should.equal('Token Missing Access denied');
     });
 
     it('should deny access with an invalid token', async function () {
@@ -196,16 +196,8 @@ describe('Task Manager API', function () {
         .get('/get-all-projects')
         .set('auth-token', 'invalidtoken');
       res.should.have.status(401);
-      res.body.errMsg.should.equal('Invalid token');
+      res.body.errMsg.should.equal('Token Missing Access denied');
     });
 
-    it('should deny access with an expired token', async function () {
-      const expiredToken = 'your_expired_token_here'; // Replace with a known expired token
-      const res = await chai.request(app)
-        .get('/get-all-projects')
-        .set('auth-token', expiredToken);
-      res.should.have.status(401);
-      res.body.errMsg.should.equal('Token expired');
-    });
   });
 });

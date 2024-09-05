@@ -4,7 +4,7 @@ const createTasks = async (req, res) => {
   const { name, description, status, project_id } = req.body;
   try {
     if (!name || !description || !status || !project_id) {
-      return res.status(400).json({ errMsg: "All fields are required" });
+      return res.status(400).json({ errMsg: "Required Information Not Present" });
     }
       
     const insertQuery = "INSERT INTO tasks (name, description, status, project_id) VALUES (?, ?, ?, ?)";
@@ -20,7 +20,7 @@ const createTasks = async (req, res) => {
 const getAllTasks = async (req, res) => {
   con.all("SELECT * FROM tasks", [], (err, rows) => {
     if (err) return res.status(400).json({ errMsg: err.message });
-    return res.status(201).json(rows);
+    return res.status(200).json(rows);
   });
 };
 

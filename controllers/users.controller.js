@@ -16,7 +16,7 @@ const register = async (req, res) => {
 
       con.run("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword], (err) => {
           if (err) return res.status(400).json({ errMsg: err.message });
-          return res.status(201).json({ msg: "User created Successfully." });
+          return res.status(201).json({ msg: "User created Successfully" });
         }
       );
     });
@@ -31,11 +31,11 @@ const login = async (req, res) => {
     if (!email || !password) return res.status(400).json({ errMsg: "email or password missing" });
 
     con.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
-      if (err) return res.status(500).json({ errMsg: "incorrect email or password" });
+      if (err) return res.status(500).json({ errMsg: err.message });
       if (!user) return res.status(400).json({ errMsg: "incorrect email or password" });
 
       const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) return res.status(401).json({ errMsg: "incorrect email or password" });
+      if (!isMatch) return res.status(400).json({ errMsg: "incorrect email or password" });
 
       const token = jwtwebtoken.sign({ id: user.id, email: user.email }, JWT_SECRET_KEY, { expiresIn: "1h" });
 

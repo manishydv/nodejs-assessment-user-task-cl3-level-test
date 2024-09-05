@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
-import { AuthRouter } from "./routes/auth.js";
-import { TaskRouter } from "./routes/tasks.js";
-import { ProjectRouter } from "./routes/projects.js";
+import { AuthRouter } from "./routes/auth.route.js";
+import { TaskRouter } from "./routes/tasks.route.js";
+import { ProjectRouter } from "./routes/projects.route.js";
 
 dotenv.config();
 

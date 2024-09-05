@@ -20,7 +20,7 @@ let con = new sql.Database(DBSOURCE, (err) => {
     );
 
     con.run(
-      `CREATE TABLE projects (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, startdate text, enddate text)`,
+      `CREATE TABLE projects (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, description text, created_by INTEGER)`,
       (err) => {
         if (err) {
           console.log("Projects Table Created");
@@ -29,7 +29,7 @@ let con = new sql.Database(DBSOURCE, (err) => {
     );
 
     con.run(
-      `CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, project_id INTEGER, status text, FOREIGN KEY (project_id) REFERENCES projects(id))`,
+      `CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, description text, status text, project_id INTEGER, FOREIGN KEY (project_id) REFERENCES projects(id))`,
       (err) => {
         if (err) {
           console.log("Tasks Table Created");
