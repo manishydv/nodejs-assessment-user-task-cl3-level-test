@@ -60,18 +60,22 @@ describe('Task Manager API', function () {
       const res = await chai.request(app).post('/register').send(user);
       res.should.have.status(201);
       res.body.msg.should.equal('User created Successfully');
+      expect(res.body).to.have.property('msg').that.is.a('string');
+      expect(res.headers).to.have.property('content-type').that.contains('application/json');
     });
 
     it('should not register with an existing email', async function () {
       const res = await chai.request(app).post('/register').send(user);
       res.should.have.status(401);
       res.body.errMsg.should.equal('Email already exists');
+      expect(res.body).to.have.property('errMsg').that.is.a('string');
     });
 
     it('should not register with missing email or password', async function () {
       const res = await chai.request(app).post('/register').send({ email: userEmail });
       res.should.have.status(400);
       res.body.errMsg.should.equal('email or password missing');
+      expect(res.body).to.have.property('errMsg').that.is.a('string');
     });
 
     it('should login with correct credentials', async function () {
@@ -80,6 +84,7 @@ describe('Task Manager API', function () {
       res.body.msg.should.equal('Success');
       res.body.should.have.property('token');
       token = res.body.token;
+      expect(res.body.token).to.be.a('string');
     });
 
     it('should not login with incorrect credentials', async function () {
@@ -106,6 +111,7 @@ describe('Task Manager API', function () {
       res.body.msg.should.equal('Project Created');
       res.body.should.have.property('project_id');
       projectId = res.body.project_id;
+      expect(res.body.project_id).to.be.a('number');
     });
 
     it('should not create a project with missing fields', async function () {
@@ -124,6 +130,8 @@ describe('Task Manager API', function () {
       res.should.have.status(200);      
       res.body.should.be.a('array');
       res.body.length.should.be.above(0);
+      expect(res.body[0]).to.have.property('id').that.is.a('number');
+      expect(res.body[0]).to.have.property('name').that.is.a('string');
     });
 
     it('should retrieve a project by ID', async function () {
@@ -132,6 +140,8 @@ describe('Task Manager API', function () {
         .set('auth-token', token);
       res.should.have.status(200);
       res.body.should.have.property('id').eql(projectId);
+      expect(res.body).to.have.property('name').that.is.a('string');
+      expect(res.body).to.have.property('description').that.is.a('string');
     });
   });
 
@@ -146,6 +156,7 @@ describe('Task Manager API', function () {
       res.body.msg.should.equal('Task Added Successfully');
       res.body.should.have.property('task_id');
       taskId = res.body.task_id;
+      expect(res.body.task_id).to.be.a('number');
     });
 
     it('should not create a task with missing fields', async function () {
@@ -164,6 +175,8 @@ describe('Task Manager API', function () {
       res.should.have.status(200);
       res.body.should.be.a('array');
       res.body.length.should.be.above(0);
+      expect(res.body[0]).to.have.property('id').that.is.a('number');
+      expect(res.body[0]).to.have.property('name').that.is.a('string');
     });
 
     it('should retrieve a task by ID', async function () {
@@ -172,6 +185,8 @@ describe('Task Manager API', function () {
         .set('auth-token', token);
       res.should.have.status(200);
       res.body.should.have.property('id').eql(taskId);
+      expect(res.body).to.have.property('name').that.is.a('string');
+      expect(res.body).to.have.property('description').that.is.a('string');
     });
 
     it('should retrieve tasks by project ID', async function () {
@@ -180,6 +195,7 @@ describe('Task Manager API', function () {
         .set('auth-token', token);
       res.should.have.status(200);
       res.body.should.be.a('array');
+      expect(res.body[0]).to.have.property('project_id').eql(projectId);
     });
   });
 
@@ -198,6 +214,5 @@ describe('Task Manager API', function () {
       res.should.have.status(401);
       res.body.errMsg.should.equal('Token Missing Access denied');
     });
-
   });
 });
